@@ -10,6 +10,7 @@ const controls = [
 ];
 
 const buildControls = (props) => {
+  console.log(props.disabled);
   return (
     <div className={styles.BuildControls}>
       {controls.map((control) => (
@@ -19,6 +20,10 @@ const buildControls = (props) => {
           added={() => {
             props.ingredientAdded(control.type);
           }}
+          removed={() => {
+            props.ingredientRemoved(control.type);
+          }}
+          disabled={props.disabled[control.type]}
         />
       ))}
     </div>
