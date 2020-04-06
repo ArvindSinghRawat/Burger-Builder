@@ -27,3 +27,7 @@
   transform: translateX(-100vw);
   z-index: -100;
 }
+
+.Logo{
+    height: 11vh;
+}
