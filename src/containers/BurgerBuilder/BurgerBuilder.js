@@ -12,7 +12,7 @@ const INGREDIENT_PRICES = {
   bacon: 0.7,
 };
 
-export class BurgerBuilder extends Component {
+class BurgerBuilder extends Component {
   state = {
     ingredients: {
       salad: 0,
@@ -80,6 +80,12 @@ export class BurgerBuilder extends Component {
     });
   };
 
+  cancelPurchaseHandler = () => {
+    this.setState({
+      purchasing: false,
+    });
+  };
+
   render() {
     const disabledInfo = {
       ...this.state.ingredients,
@@ -91,7 +97,10 @@ export class BurgerBuilder extends Component {
 
     return (
       <Aux>
-        <Modal show={this.state.purchasing}>
+        <Modal
+          show={this.state.purchasing}
+          modalClosed={this.cancelPurchaseHandler}
+        >
           <OrderSummary ingredients={this.state.ingredients} />
         </Modal>
         <div>
