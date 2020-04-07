@@ -30,9 +30,7 @@ class Layout extends Component {
         <Sidedrawer
           close={this.sidedrawerClosedHandler}
           open={this.state.showSideDrawer}
-          sideD
         />
-        <div>Sidedrawer, Backdrop</div>
         <main className={styles.Content}>{this.props.children}</main>
       </Aux>
     );
