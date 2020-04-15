@@ -77,19 +77,15 @@ export class ContactData extends Component {
       loading: true,
     });
 
+    const formData = {};
+    for (let formElementId in this.state.orderForm) {
+      formData[formElementId] = this.state.orderForm[formElementId].value;
+    }
+
     const order = {
       ingredients: this.props.ingredients,
       price: this.props.price,
-      customer: {
-        name: "Arvind",
-        address: {
-          street: "Teststreet 1",
-          zipcode: "41532",
-          country: "India",
-        },
-        email: "test@test.com",
-      },
-      deliveryMethod: "COD",
+      orderData: formData,
     };
     console.log(order);
     axios
@@ -131,7 +127,7 @@ export class ContactData extends Component {
     let form = (
       <Aux>
         <h4>Enter your Contact Data</h4>
-        <form>
+        <form onSubmit={this.orderHandler}>
           {formElementsArray.map((element) => (
             <Input
               key={element.id}
