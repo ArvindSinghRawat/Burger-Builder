@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import Button from "../../../components/UI/Button/Button";
 import axios from "../../../axios-orders";
 import Spinner from "../../../components/UI/Spinner/Spinner";
+import Input from "../../../components/UI/Input/Input";
 import Aux from "../../../hoc/Auxiliary/Auxiliary";
 
 import styles from "./ContactData.module.css";
@@ -61,10 +62,10 @@ export class ContactData extends Component {
       <Aux>
         <h4>Enter your Contact Data</h4>
         <form>
-          <input type="text" name="name" placeholder="Enter your Name" />
-          <input type="email" name="email" placeholder="Enter your Email" />
-          <input type="text" name="street" placeholder="Enter Street" />
-          <input type="text" name="postal" placeholder="Enter Postal Code" />
+          <Input inputtype="input" name="name" placeholder="Enter your Name" />
+          <Input inputtype="input" type="email" name="email" placeholder="Enter your Email" />
+          <Input inputtype="input" name="street" placeholder="Enter Street" />
+          <Input inputtype="input" name="postal" placeholder="Enter Postal Code" />
           <Button btnType="Success" clicked={this.orderHandler}>
             Continue
           </Button>
