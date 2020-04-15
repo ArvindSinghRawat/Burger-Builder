@@ -2,7 +2,8 @@ import React, { Component } from "react";
 
 import Button from "../../../components/UI/Button/Button";
 import axios from "../../../axios-orders";
-//import Spinner from "../../../components/UI/Spinner/Spinner";
+import Spinner from "../../../components/UI/Spinner/Spinner";
+import Aux from "../../../hoc/Auxiliary/Auxiliary";
 
 import styles from "./ContactData.module.css";
 
@@ -45,6 +46,7 @@ export class ContactData extends Component {
         this.setState({
           loading: false,
         });
+        this.props.history.push("/");
       })
       .catch((error) => {
         console.log(error);
@@ -55,8 +57,8 @@ export class ContactData extends Component {
   };
 
   render() {
-    return (
-      <div className={styles.ContactData}>
+    let form = (
+      <Aux>
         <h4>Enter your Contact Data</h4>
         <form>
           <input type="text" name="name" placeholder="Enter your Name" />
@@ -67,8 +69,12 @@ export class ContactData extends Component {
             Continue
           </Button>
         </form>
-      </div>
+      </Aux>
     );
+    if (this.state.loading) {
+      form = <Spinner />;
+    }
+    return <div className={styles.ContactData}>{form}</div>;
   }
 }
 
