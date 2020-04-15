@@ -10,11 +10,63 @@ import styles from "./ContactData.module.css";
 
 export class ContactData extends Component {
   state = {
-    name: "",
-    email: "",
-    address: {
-      street: "",
-      postalCode: "",
+    orderForm: {
+      name: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Your Name",
+        },
+        value: "",
+      },
+      email: {
+        elementType: "input",
+        elementConfig: {
+          type: "email",
+          placeholder: "Your Email",
+        },
+        value: "",
+      },
+      street: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Your Street",
+        },
+        value: "",
+      },
+      postalCode: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Your Postal Code",
+        },
+        value: "",
+      },
+      country: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Your Country",
+        },
+        value: "",
+      },
+      deliveryMethod: {
+        elementType: "select",
+        elementConfig: {
+          options: [
+            {
+              value: "fastest",
+              display: "Fastest Delivery",
+            },
+            {
+              value: "Cheapest",
+              display: "Cheapest Delivery",
+            },
+          ],
+        },
+        value: "Enter a Value",
+      },
     },
     loading: false,
   };
@@ -62,10 +114,20 @@ export class ContactData extends Component {
       <Aux>
         <h4>Enter your Contact Data</h4>
         <form>
+          <Input elementType="input" elementConfig="" elementValue="" />
           <Input inputtype="input" name="name" placeholder="Enter your Name" />
-          <Input inputtype="input" type="email" name="email" placeholder="Enter your Email" />
+          <Input
+            inputtype="input"
+            type="email"
+            name="email"
+            placeholder="Enter your Email"
+          />
           <Input inputtype="input" name="street" placeholder="Enter Street" />
-          <Input inputtype="input" name="postal" placeholder="Enter Postal Code" />
+          <Input
+            inputtype="input"
+            name="postal"
+            placeholder="Enter Postal Code"
+          />
           <Button btnType="Success" clicked={this.orderHandler}>
             Continue
           </Button>
