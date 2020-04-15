@@ -7,6 +7,7 @@ import Input from "../../../components/UI/Input/Input";
 import Aux from "../../../hoc/Auxiliary/Auxiliary";
 
 import styles from "./ContactData.module.css";
+import input from "../../../components/UI/Input/Input";
 
 export class ContactData extends Component {
   state = {
@@ -109,6 +110,17 @@ export class ContactData extends Component {
       });
   };
 
+  inputChangedHandler = (event, inputId) => {
+    console.log(event.target.value);
+    const updatedForm = { ...this.state.orderForm };
+    const updatedFormElement = { ...updatedForm[inputId] };
+    updatedFormElement.value = event.target.value;
+    updatedForm[inputId] = updatedFormElement;
+    this.setState({
+      orderForm: updatedForm,
+    });
+  };
+
   render() {
     const formElementsArray = [];
     for (let key in this.state.orderForm) {
@@ -127,6 +139,7 @@ export class ContactData extends Component {
               elementType={element.config.elementType}
               elementConfig={element.config.elementConfig}
               value={element.config.elementValue}
+              changed={(event) => this.inputChangedHandler(event, element.id)}
             />
           ))}
           <Button btnType="Success" clicked={this.orderHandler}>
