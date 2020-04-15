@@ -124,9 +124,9 @@ export class ContactData extends Component {
           {formElementsArray.map((element) => (
             <Input
               key={element.id}
-              elementType={element.config.type}
+              elementType={element.config.elementType}
               elementConfig={element.config.elementConfig}
-              value={element.config.value}
+              value={element.config.elementValue}
             />
           ))}
           <Button btnType="Success" clicked={this.orderHandler}>
