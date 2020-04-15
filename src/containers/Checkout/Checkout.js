@@ -7,21 +7,41 @@ import ContactData from "./ContactData/ContactData";
 export class Checkout extends Component {
   state = {
     ingredients: {
-      salad: 1,
-      meat: 1,
-      bacon: 1,
-      cheese: 1,
+      salad: 0,
+      meat: 0,
+      bacon: 0,
+      cheese: 0,
     },
   };
 
-  componentDidMount() {
-    const query = new URLSearchParams(this.props.location.search);
-    const ingredients = {};
-    for (let param of query.entries()) {
-      ingredients[param[0]] = +param[1];
+  componentWillMount() {
+  const query = new URLSearchParams(this.props.location.search);
+  const ingredients = {};
+  let price = 0;
+  for (let param of query.entries()) {
+    if (param[0] === "price") {
+      price = param[1];
+      continue;
     }
-    this.setState({ ingredients: ingredients });
+    ingredients[param[0]] = +param[1];
   }
+  this.setState({ ingredients: ingredients, totalPrice: price });
+  }
+
+  // static getDerivedStateFromProps(props, state) {
+  //   console.log("[Checkout.js] Props : ", props, "\nState : ", state);
+  //   const query = new URLSearchParams(props.location.search);
+  //   const ingredients = {};
+  //   let price = 0;
+  //   for (let param of query.entries()) {
+  //     if (param[0] === "price") {
+  //       price = param[1];
+  //       continue;
+  //     }
+  //     ingredients[param[0]] = +param[1];
+  //   }
+  //   return { ingredients: ingredients, totalPrice: price };
+  // }
 
   checkoutCancelledHandler = () => {
     this.props.history.goBack();
@@ -32,6 +52,7 @@ export class Checkout extends Component {
   };
 
   render() {
+    console.log("[Checkout.js] render state : ", this.state);
     return (
       <div>
         <CheckoutSummary
@@ -41,7 +62,12 @@ export class Checkout extends Component {
         />
         <Route
           path={this.props.match.path + "/contact-data"}
-          component={ContactData}
+          render={() => (
+            <ContactData
+              ingredients={this.state.ingredients}
+              price={this.state.totalPrice}
+            />
+          )}
         />
       </div>
     );
