@@ -93,11 +93,12 @@ export class ContactData extends Component {
             },
           ],
         },
-        value: -1,
+        value: "cheapest",
         valid: false,
         interacted: false,
       },
     },
+    formIsValid: false,
     loading: false,
   };
 
@@ -135,6 +136,14 @@ export class ContactData extends Component {
       });
   };
 
+  checkFormIsValid = (updatedOrderForm) => {
+    let formIsValid = true;
+    for (let inputIdentifier in updatedOrderForm) {
+      formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
+    }
+    return formIsValid;
+  };
+
   inputChangedHandler = (event, inputId) => {
     console.log(event.target.value);
     const updatedForm = { ...this.state.orderForm };
@@ -149,18 +158,26 @@ export class ContactData extends Component {
     this.setState({
       orderForm: updatedForm,
     });
+    const validity = this.checkFormIsValid(updatedForm);
+    if (validity !== this.state.formIsValid) {
+      this.setState({
+        formIsValid: validity,
+      });
+    }
   };
 
   checkValidity(value, rules) {
     let isValid = true;
-    if (rules.required) {
-      isValid = value.trim() !== "" && isValid;
-    }
-    if (rules.minLength) {
-      isValid = value.length >= rules.minLength && isValid;
-    }
-    if (rules.maxLength) {
-      isValid = value.length <= rules.minLength && isValid;
+    if (rules) {
+      if (rules.required) {
+        isValid = value.trim() !== "" && isValid;
+      }
+      if (rules.minLength) {
+        isValid = value.length >= rules.minLength && isValid;
+      }
+      if (rules.maxLength) {
+        isValid = value.length <= rules.minLength && isValid;
+      }
     }
     return isValid;
   }
@@ -189,7 +206,9 @@ export class ContactData extends Component {
               interacted={element.config.interacted}
             />
           ))}
-          <Button btnType="Success">Continue</Button>
+          <Button btnType="Success" disabled={!this.state.formIsValid}>
+            Continue
+          </Button>
         </form>
       </Aux>
     );
