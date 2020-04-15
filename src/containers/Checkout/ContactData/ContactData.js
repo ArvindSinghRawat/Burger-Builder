@@ -22,6 +22,7 @@ export class ContactData extends Component {
           required: true,
         },
         valid: false,
+        interacted: false,
       },
       email: {
         elementType: "input",
@@ -34,6 +35,7 @@ export class ContactData extends Component {
           required: true,
         },
         valid: false,
+        interacted: false,
       },
       street: {
         elementType: "input",
@@ -46,6 +48,7 @@ export class ContactData extends Component {
           required: true,
         },
         valid: false,
+        interacted: false,
       },
       postalCode: {
         elementType: "input",
@@ -60,6 +63,7 @@ export class ContactData extends Component {
           maxLength: 6,
         },
         valid: false,
+        interacted: false,
       },
       country: {
         elementType: "input",
@@ -72,6 +76,7 @@ export class ContactData extends Component {
           required: true,
         },
         valid: false,
+        interacted: false,
       },
       deliveryMethod: {
         elementType: "select",
@@ -90,6 +95,7 @@ export class ContactData extends Component {
         },
         value: -1,
         valid: false,
+        interacted: false,
       },
     },
     loading: false,
@@ -133,6 +139,7 @@ export class ContactData extends Component {
     console.log(event.target.value);
     const updatedForm = { ...this.state.orderForm };
     const updatedFormElement = { ...updatedForm[inputId] };
+    updatedFormElement.interacted = true;
     updatedFormElement.value = event.target.value;
     updatedFormElement.valid = this.checkValidity(
       updatedFormElement.value,
@@ -179,6 +186,7 @@ export class ContactData extends Component {
               changed={(event) => this.inputChangedHandler(event, element.id)}
               invalid={!element.config.valid}
               shouldValidate={element.config.validation}
+              interacted={element.config.interacted}
             />
           ))}
           <Button btnType="Success">Continue</Button>
