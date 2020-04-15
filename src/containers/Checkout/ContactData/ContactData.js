@@ -7,7 +7,6 @@ import Input from "../../../components/UI/Input/Input";
 import Aux from "../../../hoc/Auxiliary/Auxiliary";
 
 import styles from "./ContactData.module.css";
-import input from "../../../components/UI/Input/Input";
 
 export class ContactData extends Component {
   state = {
