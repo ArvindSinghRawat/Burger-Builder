@@ -1,31 +1,30 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+import axios from "../../axios-orders";
+
 import Aux from "../../hoc/Auxiliary/Auxiliary";
 import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import Modal from "./../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
-import axios from "../../axios-orders";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 
-import { addIngredient, removeIngredient } from "../../store/actions/burgerBuilder";
+import {
+  addIngredient,
+  removeIngredient,
+  initIngredients,
+} from "../../store/actions/burgerBuilder";
 
 class BurgerBuilder extends Component {
   state = {
-    totalPrice: 4,
     purchasing: false,
-    loading: false,
   };
 
-  // componentDidMount() {
-  //   axios.get("/ingredients.json").then((response) => {
-  //     this.setState({
-  //       ingredients: response.data,
-  //     });
-  //   });
-  // }
+  componentDidMount() {
+    this.props.onIngredientsFetched();
+  }
 
   updatePurchaseState = (updatedIngredients) => {
     const ingredients = {
@@ -63,7 +62,18 @@ class BurgerBuilder extends Component {
     }
 
     let orderSummary = null;
-    let burger = (
+    let burger = this.props.error ? (
+      <h3
+        style={{
+          width: "100%",
+          textAlign: "center",
+          margin: "16px auto",
+        }}
+      >
+        {" "}
+        Ingredients can't be loaded{" "}
+      </h3>
+    ) : (
       <div
         style={{
           display: "flex",
@@ -105,10 +115,6 @@ class BurgerBuilder extends Component {
       );
     }
 
-    if (this.state.loading) {
-      orderSummary = <Spinner />;
-    }
-
     return (
       <Aux>
         <Modal
@@ -126,6 +132,7 @@ class BurgerBuilder extends Component {
 const mapStateToProps = (state) => ({
   ingredients: state.ingredients,
   totalPrice: state.totalPrice,
+  error: state.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -133,6 +140,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(addIngredient(ingredientName)),
   onIngredientRemove: (ingredientName) =>
     dispatch(removeIngredient(ingredientName)),
+  onIngredientsFetched: () => dispatch(initIngredients()),
 });
 
 export default connect(
