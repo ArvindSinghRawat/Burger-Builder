@@ -15,7 +15,8 @@ import {
   addIngredient,
   removeIngredient,
   initIngredients,
-} from "../../store/actions/burgerBuilder";
+  purchaseInit,
+} from "../../store/actions/index";
 
 class BurgerBuilder extends Component {
   state = {
@@ -49,6 +50,7 @@ class BurgerBuilder extends Component {
   };
 
   continuePurchaseHandler = () => {
+    this.props.onInitPurchase();
     this.props.history.push("/checkout");
   };
 
@@ -141,9 +143,10 @@ const mapDispatchToProps = (dispatch) => ({
   onIngredientRemove: (ingredientName) =>
     dispatch(removeIngredient(ingredientName)),
   onIngredientsFetched: () => dispatch(initIngredients()),
+  onInitPurchase: () => dispatch(purchaseInit()),
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withErrorHandler(BurgerBuilder.BurgerBuilder, BurgerBuilder.axios));
+)(withErrorHandler(BurgerBuilder, axios));

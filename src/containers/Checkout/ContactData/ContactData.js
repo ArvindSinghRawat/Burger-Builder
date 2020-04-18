@@ -98,7 +98,7 @@ export class ContactData extends Component {
             },
           ],
         },
-        value: "cheapest",
+        value: "fastest",
         valid: false,
         interacted: false,
       },
