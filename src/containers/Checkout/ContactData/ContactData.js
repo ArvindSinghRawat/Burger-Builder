@@ -104,7 +104,6 @@ export class ContactData extends Component {
       },
     },
     formIsValid: false,
-    loading: false,
   };
 
   orderHandler = (event) => {
@@ -200,7 +199,7 @@ export class ContactData extends Component {
         </form>
       </Aux>
     );
-    if (this.state.loading) {
+    if (this.props.loading) {
       form = <Spinner />;
     }
     return <div className={styles.ContactData}>{form}</div>;
@@ -210,10 +209,11 @@ export class ContactData extends Component {
 const mapStateToProps = (state) => ({
   ingredients: state.ingredients,
   totalPrice: state.totalPrice,
+  loading: state.loading,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onOrderBurger: (orderData) => dispatch(actions.purchaseStart(orderData)),
+  onOrderBurger: (orderData) => dispatch(actions.purchaseBurger(orderData)),
 });
 
 export default connect(
