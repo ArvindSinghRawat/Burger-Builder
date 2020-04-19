@@ -16,10 +16,11 @@ export const purchaseBurgerStart = () => ({
   type: actionTypes.PURCHASE_BURGER_START,
 });
 
-export const purchaseBurger = (orderData) => (dispatch) => {
+export const purchaseBurger = (orderData, token) => (dispatch) => {
   dispatch(purchaseBurgerStart());
+  const targetUrl = "/orders.json" + (token ? "?auth=" + token : "");
   axios
-    .post("/orders.json", orderData)
+    .post(targetUrl, orderData)
     .then((response) => {
       console.log("[MIDDLEWARE] purchase response : ", response.data);
       dispatch(purchaseBurgerSuccess(response.data, orderData));

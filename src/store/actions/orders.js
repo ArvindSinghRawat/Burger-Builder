@@ -11,16 +11,19 @@ export const fetchOrdersSuccess = (orders) => ({
 export const fetchOrdersFailed = (error) => ({
   type: actionTypes.FETCH_ORDERS_FAILED,
   error: error,
+  orders: [],
 });
 
 export const fetchOrdersStart = () => ({
   type: actionTypes.FETCH_ORDERS_START,
 });
 
-export const fetchOrders = () => (dispatch) => {
+export const fetchOrders = (token) => (dispatch) => {
   fetchOrdersStart();
+  const targetUrl = "/orders.json" + (token ? "?auth=" + token : "");
+  console.log("Target Url : ", targetUrl, token);
   axios
-    .get("/orders.json")
+    .get(targetUrl)
     .then((response) => {
       const fetchedOrders = [];
       for (let key in response.data) {
