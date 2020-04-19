@@ -44,7 +44,6 @@ export class Auth extends Component {
   };
 
   inputChangedHandler = (event, inputId) => {
-    console.log(event.target.value);
     const updatedForm = { ...this.state.controls };
     const updatedFormElement = { ...updatedForm[inputId] };
     updatedFormElement.interacted = true;
@@ -90,9 +89,12 @@ export class Auth extends Component {
   }
 
   onSubmitHandler = (event) => {
-      event.preventDefault();
-      this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value);
-  }
+    event.preventDefault();
+    this.props.onAuth(
+      this.state.controls.email.value,
+      this.state.controls.password.value
+    );
+  };
 
   render() {
     const formElementArray = [];
@@ -103,7 +105,7 @@ export class Auth extends Component {
       });
     }
     const form = (
-      <form>
+      <form onSubmit={this.onSubmitHandler}>
         {formElementArray.map((element) => (
           <Input
             key={element.id}
@@ -133,7 +135,7 @@ export class Auth extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    onAuth: (email, password) => dispatch(auth(email, password)),
-})
+  onAuth: (email, password) => dispatch(auth(email, password)),
+});
 
 export default connect(null, mapDispatchToProps)(Auth);
