@@ -94,11 +94,12 @@ export class Auth extends Component {
     this.props.onAuth(
       this.state.controls.email.value,
       this.state.controls.password.value,
-      this.state.isSignUp ? "signup" : "signin"
+      this.state.isSignUp
     );
   };
 
-  switchAuthModeSignUp = () => {
+  switchAuthModeSignUp = (event) => {
+    event.preventDefault();
     const prevState = !this.state.isSignUp;
     this.setState({
       isSignUp: prevState,
@@ -151,7 +152,8 @@ export class Auth extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  onAuth: (email, password) => dispatch(auth(email, password)),
+  onAuth: (email, password, isSignUp) =>
+    dispatch(auth(email, password, isSignUp)),
 });
 
 export default connect(null, mapDispatchToProps)(Auth);
