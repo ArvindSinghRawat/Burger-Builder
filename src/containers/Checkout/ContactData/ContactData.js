@@ -8,7 +8,7 @@ import Input from "../../../components/UI/Input/Input";
 import Aux from "../../../hoc/Auxiliary/Auxiliary";
 
 import * as actions from "../../../store/actions/index";
-import { updateObject } from "../../../shared/utility";
+import { updateObject, checkValidity } from "../../../shared/utility";
 
 import styles from "./ContactData.module.css";
 
@@ -137,7 +137,7 @@ export class ContactData extends Component {
     const updatedFormElement = updateObject(this.state.orderForm[inputId], {
       interacted: true,
       value: event.target.value,
-      valid: this.checkValidity(
+      valid: checkValidity(
         event.target.value,
         this.state.orderForm[inputId].validation
       ),
@@ -157,22 +157,6 @@ export class ContactData extends Component {
       });
     }
   };
-
-  checkValidity(value, rules) {
-    let isValid = true;
-    if (rules) {
-      if (rules.required) {
-        isValid = value.trim() !== "" && isValid;
-      }
-      if (rules.minLength) {
-        isValid = value.length >= rules.minLength && isValid;
-      }
-      if (rules.maxLength) {
-        isValid = value.length <= rules.minLength && isValid;
-      }
-    }
-    return isValid;
-  }
 
   render() {
     const formElementsArray = [];

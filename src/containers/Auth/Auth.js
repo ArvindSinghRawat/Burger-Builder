@@ -9,7 +9,7 @@ import Spinner from "../../components/UI/Spinner/Spinner";
 import styles from "./Auth.module.css";
 
 import { auth, setAuthRedirect } from "../../store/actions/index";
-import { updateObject } from "../../shared/utility";
+import { updateObject, checkValidity } from "../../shared/utility";
 
 export class Auth extends Component {
   state = {
@@ -57,7 +57,7 @@ export class Auth extends Component {
     const updatedFormElement = updateObject(this.state.controls[inputId], {
       interacted: true,
       value: event.target.value,
-      valid: this.checkValidity(
+      valid: checkValidity(
         event.target.value,
         this.state.controls[inputId].validation
       ),
@@ -70,7 +70,7 @@ export class Auth extends Component {
     this.setState({
       controls: updatedForm,
     });
-    
+
     const validity = this.checkFormIsValid(updatedForm);
     if (validity !== this.state.formIsValid) {
       this.setState({
