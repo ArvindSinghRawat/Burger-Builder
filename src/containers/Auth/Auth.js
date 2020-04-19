@@ -41,6 +41,7 @@ export class Auth extends Component {
       },
     },
     formIsValid: false,
+    isSignUp: true,
   };
 
   inputChangedHandler = (event, inputId) => {
@@ -92,8 +93,16 @@ export class Auth extends Component {
     event.preventDefault();
     this.props.onAuth(
       this.state.controls.email.value,
-      this.state.controls.password.value
+      this.state.controls.password.value,
+      this.state.isSignUp ? "signup" : "signin"
     );
+  };
+
+  switchAuthModeSignUp = () => {
+    const prevState = !this.state.isSignUp;
+    this.setState({
+      isSignUp: prevState,
+    });
   };
 
   render() {
@@ -120,13 +129,20 @@ export class Auth extends Component {
           />
         ))}
         <Button btnType="Success" disabled={!this.state.formIsValid}>
-          LogIn
+          {this.state.isSignUp ? "Signup" : "Sign-In"}
+        </Button>
+        <Button btnType="Danger" clicked={this.switchAuthModeSignUp}>
+          Switch to {!this.state.isSignUp ? "Signup" : "Sign-In"}
         </Button>
       </form>
     );
     return (
       <div className={styles.Auth}>
-        <h1>Authentication</h1>
+        <h1>
+          {this.state.isSignUp
+            ? "Create New Account"
+            : "SignIn to your Account"}
+        </h1>
         <br />
         {form}
       </div>

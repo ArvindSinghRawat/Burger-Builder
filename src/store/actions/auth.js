@@ -21,15 +21,17 @@ export const authFailed = (error) => {
   };
 };
 
-export const auth = (email, password) => (dispatch) => {
-  console.log("asdfas");
+export const auth = (email, password, isSignUp) => (dispatch) => {
+  const targetUrl =
+    (isSignUp ? "/accounts:signUp?key=" : "/accounts:signInWithPassword?key=") +
+    API_KEY;
   const authData = {
     email: email,
     password: password,
     returnSecureToken: true,
   };
   axios
-    .post("/accounts:signUp?key=" + API_KEY, authData)
+    .post(targetUrl, authData)
     .then((response) => {
       console.log(response.data);
       dispatch(authSuccess(response.data));
