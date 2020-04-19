@@ -7,3 +7,5 @@ export {
 export { purchaseBurger, purchaseInit } from "./order";
 
 export { fetchOrders } from "./orders";
+
+export { auth } from "./auth";

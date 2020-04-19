@@ -5,6 +5,9 @@ import Button from "../../components/UI/Button/Button";
 
 import styles from "./Auth.module.css";
 
+import { auth } from "../../store/actions/index";
+import { connect } from "react-redux";
+
 export class Auth extends Component {
   state = {
     controls: {
@@ -86,6 +89,11 @@ export class Auth extends Component {
     return isValid;
   }
 
+  onSubmitHandler = (event) => {
+      event.preventDefault();
+      this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value);
+  }
+
   render() {
     const formElementArray = [];
     for (let key in this.state.controls) {
@@ -124,4 +132,8 @@ export class Auth extends Component {
   }
 }
 
-export default Auth;
+const mapDispatchToProps = (dispatch) => ({
+    onAuth: (email, password) => dispatch(auth(email, password)),
+})
+
+export default connect(null, mapDispatchToProps)(Auth);
