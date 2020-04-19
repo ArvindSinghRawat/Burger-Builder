@@ -23,10 +23,11 @@ export const authFailed = (error) => {
 };
 
 export const auth = (email, password, isSignUp) => (dispatch) => {
+  dispatch(authStart());
   const targetUrl =
     (isSignUp ? "/accounts:signUp?key=" : "/accounts:signInWithPassword?key=") +
     API_KEY;
-  console.log(isSignUp,targetUrl);
+  console.log(isSignUp, targetUrl);
   const authData = {
     email: email,
     password: password,
@@ -40,6 +41,6 @@ export const auth = (email, password, isSignUp) => (dispatch) => {
     })
     .catch((error) => {
       console.log(error);
-      dispatch(authFailed(error));
+      dispatch(authFailed(error.response.data.error));
     });
 };

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Button/Button";
+import Spinner from "../../components/UI/Spinner/Spinner";
 
 import styles from "./Auth.module.css";
 
@@ -108,52 +109,63 @@ export class Auth extends Component {
 
   render() {
     const formElementArray = [];
-    for (let key in this.state.controls) {
-      formElementArray.push({
-        id: key,
-        config: this.state.controls[key],
-      });
+    let errorMessage = null;
+    let form = <Spinner />;
+
+    if(this.props.error){
+      errorMessage = (
+        <p>{this.props.error.message}</p>
+      )
     }
-    const form = (
-      <form onSubmit={this.onSubmitHandler}>
-        {formElementArray.map((element) => (
-          <Input
-            key={element.id}
-            name={element.id}
-            elementType={element.config.elementType}
-            elementConfig={element.config.elementConfig}
-            value={element.config.elementValue}
-            changed={(event) => this.inputChangedHandler(event, element.id)}
-            invalid={!element.config.valid}
-            shouldValidate={element.config.validation}
-            interacted={element.config.interacted}
-          />
-        ))}
-        <Button btnType="Success" disabled={!this.state.formIsValid}>
-          {this.state.isSignUp ? "Signup" : "Sign-In"}
-        </Button>
-        <Button btnType="Danger" clicked={this.switchAuthModeSignUp}>
-          Switch to {!this.state.isSignUp ? "Signup" : "Sign-In"}
-        </Button>
-      </form>
-    );
-    return (
-      <div className={styles.Auth}>
-        <h1>
-          {this.state.isSignUp
-            ? "Create New Account"
-            : "SignIn to your Account"}
-        </h1>
-        <br />
-        {form}
-      </div>
-    );
+    if (!this.props.loading) {
+      for (let key in this.state.controls) {
+        formElementArray.push({
+          id: key,
+          config: this.state.controls[key],
+        });
+      }
+      form = (
+        <form onSubmit={this.onSubmitHandler}>
+          <h1>
+            {this.state.isSignUp
+              ? "Create New Account"
+              : "SignIn to your Account"}
+          </h1>
+          <br />
+          {formElementArray.map((element) => (
+            <Input
+              key={element.id}
+              name={element.id}
+              elementType={element.config.elementType}
+              elementConfig={element.config.elementConfig}
+              value={element.config.elementValue}
+              changed={(event) => this.inputChangedHandler(event, element.id)}
+              invalid={!element.config.valid}
+              shouldValidate={element.config.validation}
+              interacted={element.config.interacted}
+            />
+          ))}
+          <Button btnType="Success" disabled={!this.state.formIsValid}>
+            {this.state.isSignUp ? "Signup" : "Sign-In"}
+          </Button>
+          <Button btnType="Danger" clicked={this.switchAuthModeSignUp}>
+            Switch to {!this.state.isSignUp ? "Signup" : "Sign-In"}
+          </Button>
+        </form>
+      );
+    }
+  return <div className={styles.Auth}>{form}{errorMessage}</div>;
   }
 }
+
+const mapStateToProps = (state) => ({
+  loading: state.auth.loading,
+  error: state.auth.error,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   onAuth: (email, password, isSignUp) =>
     dispatch(auth(email, password, isSignUp)),
 });
 
-export default connect(null, mapDispatchToProps)(Auth);
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);
