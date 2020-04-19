@@ -5,14 +5,15 @@ import NavigationItems from "../NavigationItems/NavigationItems";
 import DrawerToggle from "../../Navigation/SideDrawer/DrawerToggle/DrawerToggle";
 
 import styles from "./Toolbar.module.css";
+import { Link } from "react-router-dom";
 
 const toolbar = (props) => {
   return (
     <header className={styles.Toolbar}>
       <DrawerToggle clicked={props.sidedrawerToggleClicked} />
-      <div className={styles.Logo}>
+      <Link className={styles.Logo} to="/">
         <Logo />
-      </div>
+      </Link>
       <nav className={styles.DesktopOnly}>
         <NavigationItems isAuthenticated={props.isAuthenticated} />
       </nav>

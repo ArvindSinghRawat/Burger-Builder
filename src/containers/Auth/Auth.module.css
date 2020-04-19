@@ -9,6 +9,12 @@
   border-radius: 5px;
 }
 
+.ControlGroup {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-evenly;
+}
+
 @media (min-width: 600px) {
   .Auth {
     width: 500px;

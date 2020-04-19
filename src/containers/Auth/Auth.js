@@ -160,12 +160,14 @@ export class Auth extends Component {
                 interacted={element.config.interacted}
               />
             ))}
-            <Button btnType="Success" disabled={!this.state.formIsValid}>
-              {this.state.isSignUp ? "Signup" : "Sign-In"}
-            </Button>
-            <Button btnType="Danger" clicked={this.switchAuthModeSignUp}>
-              Switch to {!this.state.isSignUp ? "Signup" : "Sign-In"}
-            </Button>
+            <div className={styles.ControlGroup}>
+              <Button btnType="Success" disabled={!this.state.formIsValid}>
+                {this.state.isSignUp ? "Signup" : "Sign-In"}
+              </Button>
+              <Button btnType="Danger" clicked={this.switchAuthModeSignUp}>
+                Switch to {!this.state.isSignUp ? "Signup" : "Sign-In"}
+              </Button>
+            </div>
           </form>
         );
       }
