@@ -126,7 +126,7 @@ export class Auth extends Component {
     let form = <Spinner />;
 
     if (this.props.isAuthenticated) {
-      console.log("[Auth.js] redirect to : ", this.props.authRedirectPath);
+      //console.log("[Auth.js] redirect to : ", this.props.authRedirectPath);
       form = <Redirect to={this.props.authRedirectPath} />;
     } else {
       if (this.props.error) {

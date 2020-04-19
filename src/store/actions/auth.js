@@ -41,7 +41,7 @@ export const auth = (email, password, isSignUp) => (dispatch) => {
   const targetUrl =
     (isSignUp ? "/accounts:signUp?key=" : "/accounts:signInWithPassword?key=") +
     API_KEY;
-  console.log(isSignUp, targetUrl);
+  //console.log(isSignUp, targetUrl);
   const authData = {
     email: email,
     password: password,
@@ -50,7 +50,7 @@ export const auth = (email, password, isSignUp) => (dispatch) => {
   axios
     .post(targetUrl, authData)
     .then((response) => {
-      console.log(response.data);
+      //console.log(response.data);
       const expiresAt = new Date(
         new Date().getTime() + response.data.expiresIn * 1000
       );
@@ -61,7 +61,7 @@ export const auth = (email, password, isSignUp) => (dispatch) => {
       dispatch(checkAuthTimeout(response.data.expiresIn));
     })
     .catch((error) => {
-      console.log(error);
+      //console.log(error);
       dispatch(authFailed(error.response.data.error));
     });
 };

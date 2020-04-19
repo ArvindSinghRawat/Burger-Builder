@@ -23,7 +23,7 @@ export const fetchOrders = (token, userId) => (dispatch) => {
   const queryParams =
     "?auth=" + token + '&orderBy="userId"&equalTo="' + userId + '"';
   const targetUrl = "/orders.json" + (token ? queryParams : "");
-  console.log("Target Url : ", targetUrl, token);
+  //console.log("Target Url : ", targetUrl, token);
   axios
     .get(targetUrl)
     .then((response) => {

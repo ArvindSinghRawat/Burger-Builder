@@ -22,11 +22,11 @@ export const purchaseBurger = (orderData, token) => (dispatch) => {
   axios
     .post(targetUrl, orderData)
     .then((response) => {
-      console.log("[MIDDLEWARE] purchase response : ", response.data);
+      //console.log("[MIDDLEWARE] purchase response : ", response.data);
       dispatch(purchaseBurgerSuccess(response.data, orderData));
     })
     .catch((error) => {
-      console.log(error);
+      //console.log(error);
       dispatch(purchaseBurgerFailed(error));
     });
 };

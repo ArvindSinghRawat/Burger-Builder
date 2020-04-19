@@ -35,7 +35,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
       this.setState({
         error: null,
       });
-      console.log("Closed Modal");
+      //console.log("Closed Modal");
     };
 
     render() {
