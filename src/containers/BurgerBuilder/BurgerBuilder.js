@@ -16,6 +16,7 @@ import {
   removeIngredient,
   initIngredients,
   purchaseInit,
+  setAuthRedirect,
 } from "../../store/actions/index";
 
 class BurgerBuilder extends Component {
@@ -43,6 +44,7 @@ class BurgerBuilder extends Component {
         purchasing: true,
       });
     } else {
+      this.props.onSetAuthRedirectPath("/checkout");
       this.props.history.push("/auth");
     }
   };
@@ -150,6 +152,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(removeIngredient(ingredientName)),
   onIngredientsFetched: () => dispatch(initIngredients()),
   onInitPurchase: () => dispatch(purchaseInit()),
+  onSetAuthRedirectPath: (path) => dispatch(setAuthRedirect(path)),
 });
 
 export default connect(
