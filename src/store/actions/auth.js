@@ -1,6 +1,5 @@
 import * as actionTypes from "./actionTypes";
 import axios, { API_KEY } from "../../axios-auth";
-import logo from "../../components/Logo/Logo";
 
 export const authStart = () => {
   return {
@@ -57,7 +56,7 @@ export const auth = (email, password, isSignUp) => (dispatch) => {
       );
       localStorage.setItem("token", response.data.idToken);
       localStorage.setItem("expiresAt", expiresAt);
-      localStorage.setItem("userId", response.data.userId);
+      localStorage.setItem("userId", response.data.localId);
       dispatch(authSuccess(response.data.idToken, response.data.localId));
       dispatch(checkAuthTimeout(response.data.expiresIn));
     })
@@ -84,7 +83,9 @@ export const checkAuthState = () => (dispatch) => {
       const userId = localStorage.getItem("userId");
       dispatch(authSuccess(token, userId));
       dispatch(
-        checkAuthTimeout((expirationTime.getTime() - new Date().getTime()) / 1000)
+        checkAuthTimeout(
+          (expirationTime.getTime() - new Date().getTime()) / 1000
+        )
       );
     }
   }

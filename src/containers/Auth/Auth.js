@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 
 import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Button/Button";
@@ -8,7 +9,7 @@ import Spinner from "../../components/UI/Spinner/Spinner";
 import styles from "./Auth.module.css";
 
 import { auth, setAuthRedirect } from "../../store/actions/index";
-import { connect } from "react-redux";
+import { updateObject } from "../../shared/utility";
 
 export class Auth extends Component {
   state = {
@@ -53,18 +54,23 @@ export class Auth extends Component {
   }
 
   inputChangedHandler = (event, inputId) => {
-    const updatedForm = { ...this.state.controls };
-    const updatedFormElement = { ...updatedForm[inputId] };
-    updatedFormElement.interacted = true;
-    updatedFormElement.value = event.target.value;
-    updatedFormElement.valid = this.checkValidity(
-      updatedFormElement.value,
-      updatedFormElement.validation
-    );
-    updatedForm[inputId] = updatedFormElement;
+    const updatedFormElement = updateObject(this.state.controls[inputId], {
+      interacted: true,
+      value: event.target.value,
+      valid: this.checkValidity(
+        event.target.value,
+        this.state.controls[inputId].validation
+      ),
+    });
+
+    const updatedForm = updateObject(this.state.controls, {
+      [inputId]: updatedFormElement,
+    });
+
     this.setState({
       controls: updatedForm,
     });
+    
     const validity = this.checkFormIsValid(updatedForm);
     if (validity !== this.state.formIsValid) {
       this.setState({

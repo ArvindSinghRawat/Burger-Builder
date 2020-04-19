@@ -8,6 +8,7 @@ import Input from "../../../components/UI/Input/Input";
 import Aux from "../../../hoc/Auxiliary/Auxiliary";
 
 import * as actions from "../../../store/actions/index";
+import { updateObject } from "../../../shared/utility";
 
 import styles from "./ContactData.module.css";
 
@@ -120,7 +121,7 @@ export class ContactData extends Component {
       orderData: formData,
       userId: this.props.userId,
     };
-
+    console.log(order);
     this.props.onOrderBurger(order, this.props.token);
   };
 
@@ -133,19 +134,22 @@ export class ContactData extends Component {
   };
 
   inputChangedHandler = (event, inputId) => {
-    console.log(event.target.value);
-    const updatedForm = { ...this.state.orderForm };
-    const updatedFormElement = { ...updatedForm[inputId] };
-    updatedFormElement.interacted = true;
-    updatedFormElement.value = event.target.value;
-    updatedFormElement.valid = this.checkValidity(
-      updatedFormElement.value,
-      updatedFormElement.validation
-    );
-    updatedForm[inputId] = updatedFormElement;
+    const updatedFormElement = updateObject(this.state.orderForm[inputId], {
+      interacted: true,
+      value: event.target.value,
+      valid: this.checkValidity(
+        event.target.value,
+        this.state.orderForm[inputId].validation
+      ),
+    });
+    const updatedForm = updateObject(this.state.orderForm, {
+      [inputId]: updatedFormElement,
+    });
+
     this.setState({
       orderForm: updatedForm,
     });
+
     const validity = this.checkFormIsValid(updatedForm);
     if (validity !== this.state.formIsValid) {
       this.setState({
