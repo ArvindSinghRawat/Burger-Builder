@@ -24,3 +24,8 @@ yarn-error.log*
 
 axios-orders.js
 src/axios-auth.js
+
+# Firebase
+firebase.json
+.firebaserc
+.firebase/
