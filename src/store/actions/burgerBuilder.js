@@ -19,13 +19,6 @@ export const fetchIngredientsFailed = () => ({
   type: actionTypes.FETCH_INGREDIENTS_FAILED,
 });
 
-export const initIngredients = () => (dispatch) => {
-  axios
-    .get("/ingredients.json")
-    .then((response) => {
-      dispatch(setIngredients(response.data));
-    })
-    .catch((error) => {
-      dispatch(fetchIngredientsFailed());
-    });
-};
+export const initIngredients = () => ({
+  type: actionTypes.INIT_INGREDIENTS,
+});
