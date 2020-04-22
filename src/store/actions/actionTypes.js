@@ -18,6 +18,8 @@ export const PURCHASE_BURGER = "PURCHASE_BURGER";
 export const FETCH_ORDERS_START = "FETCH_ORDERS_START";
 export const FETCH_ORDERS_SUCCESS = "FETCH_ORDERS_SUCCESS";
 export const FETCH_ORDERS_FAILED = "FETCH_ORDERS_FAILED";
+// Order ( Fetching ) Saga Actions
+export const FETCH_ORDERS = "FETCH_ORDERS";
 
 // Auth Actions
 export const AUTH_START = "AUTH_START";
