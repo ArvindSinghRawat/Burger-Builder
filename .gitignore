@@ -26,6 +26,6 @@ axios-orders.js
 src/axios-auth.js
 
 # Firebase
-.firebaserc
 firebase.json
+.firebaserc
 .firebase/
