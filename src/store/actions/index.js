@@ -14,5 +14,4 @@ export {
   logoutSucceed,
   setAuthRedirect,
   checkAuthState,
-  authStart,
 } from "./auth";
