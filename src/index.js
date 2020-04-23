@@ -16,28 +16,28 @@ import orderReducer from "./store/reducers/order";
 import authReducer from "./store/reducers/auth";
 
 import {
-  watchAuth,
-  watchBurgerBuilder,
-  watchOrder,
-  watchOrders,
+   watchAuth,
+   watchBurgerBuilder,
+   watchOrder,
+   watchOrders,
 } from "./store/sagas";
 
 const composeEnhancers =
-  (process.env.NODE_ENV === "development"
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    : null) || compose;
+   (process.env.NODE_ENV === "development"
+      ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+      : null) || compose;
 
 const rootReducer = combineReducers({
-  burgerBuilder: burgerBuilderReducer,
-  order: orderReducer,
-  auth: authReducer,
+   burgerBuilder: burgerBuilderReducer,
+   order: orderReducer,
+   auth: authReducer,
 });
 
 const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(
-  rootReducer,
-  composeEnhancers(applyMiddleware(thunk, sagaMiddleware))
+   rootReducer,
+   composeEnhancers(applyMiddleware(thunk, sagaMiddleware))
 );
 
 sagaMiddleware.run(watchAuth);
@@ -46,14 +46,14 @@ sagaMiddleware.run(watchOrder);
 sagaMiddleware.run(watchOrders);
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter basename={"Burger-Builder/"}>
-        <App />
-      </BrowserRouter>
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById("root")
+   <React.StrictMode>
+      <Provider store={store}>
+         <BrowserRouter basename={"Burger-Builder/"}>
+            <App />
+         </BrowserRouter>
+      </Provider>
+   </React.StrictMode>,
+   document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change
