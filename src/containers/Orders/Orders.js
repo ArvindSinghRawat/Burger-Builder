@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import axios from "../../axios-orders";
 import { connect } from "react-redux";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
@@ -9,46 +9,43 @@ import * as actions from "../../store/actions/index";
 
 import Spinner from "../../components/UI/Spinner/Spinner";
 
-export class Orders extends Component {
-  componentDidMount() {
-    this.props.onFetchOrders(this.props.token, this.props.userId);
-  }
+export const Orders = (props) => {
+   useEffect(() => {
+      props.onFetchOrders(props.token, props.userId);
+   }, []);
 
-  render() {
-    //console.log("orders render : ", this.props.orders);
-    let orders = <Spinner />;
-    if (!this.props.loading) {
+   let orders = <Spinner />;
+   if (!props.loading) {
       orders = (
-        <div>
-          {this.props.orders.map((order) => (
-            <Order
-              key={order.id}
-              ingredients={order.ingredients}
-              price={order.price}
-            />
-          ))}
-        </div>
+         <div>
+            {props.orders.map((order) => (
+               <Order
+                  key={order.id}
+                  ingredients={order.ingredients}
+                  price={order.price}
+               />
+            ))}
+         </div>
       );
-    }
-    return orders;
-  }
-}
+   }
+   return orders;
+};
 
 const mapStateToProps = (state) => {
-  return {
-    orders: state.order.orders,
-    loading: state.order.loading,
-    token: state.auth.token,
-    userId: state.auth.userId,
-  };
+   return {
+      orders: state.order.orders,
+      loading: state.order.loading,
+      token: state.auth.token,
+      userId: state.auth.userId,
+   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  onFetchOrders: (token, userId) =>
-    dispatch(actions.fetchOrders(token, userId)),
+   onFetchOrders: (token, userId) =>
+      dispatch(actions.fetchOrders(token, userId)),
 });
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+   mapStateToProps,
+   mapDispatchToProps
 )(withErrorHandler(Orders, axios));
