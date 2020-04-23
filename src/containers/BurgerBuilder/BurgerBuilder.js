@@ -22,9 +22,11 @@ import {
 export const BurgerBuilder = (props) => {
    const [purchasing, setPurchasing] = useState(false);
 
+   const { onIngredientsFetched } = props;
+
    useEffect(() => {
-      props.onIngredientsFetched();
-   }, []);
+      onIngredientsFetched();
+   }, [onIngredientsFetched]);
 
    const updatePurchaseState = (updatedIngredients) => {
       const ingredients = {

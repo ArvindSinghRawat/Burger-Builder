@@ -45,11 +45,13 @@ export const Auth = (props) => {
    const [formIsValid, setFormIsValid] = useState(false);
    const [isSignUp, setIsSignUp] = useState(true);
 
+   const { buildingBurger, authRedirectPath, onSetRedirectPath } = props;
+
    useEffect(() => {
-      if (!props.buildingBurger && props.authRedirectPath !== "/") {
-         props.onSetRedirectPath();
+      if (!buildingBurger && authRedirectPath !== "/") {
+         onSetRedirectPath();
       }
-   });
+   }, [buildingBurger, authRedirectPath, onSetRedirectPath]);
 
    const inputChangedHandler = (event, inputId) => {
       const updatedFormElement = updateObject(controls[inputId], {
