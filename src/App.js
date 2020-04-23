@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, Suspense } from "react";
 import { Route, Switch, withRouter, Redirect } from "react-router-dom";
 
 import Layout from "./containers/Layout/Layout";
@@ -7,15 +7,14 @@ import Logout from "./containers/Auth/Logout/Logout";
 
 import { checkAuthState } from "./store/actions/index";
 import { connect } from "react-redux";
-import asyncComponent from "./hoc/async/async";
 
-const asyncCheckout = asyncComponent(() =>
-   import("./containers/Checkout/Checkout")
-);
+import Spinner from "./components/UI/Spinner/Spinner";
 
-const asyncOrders = asyncComponent(() => import("./containers/Orders/Orders"));
+const Checkout = React.lazy(() => import("./containers/Checkout/Checkout"));
 
-const asyncAuth = asyncComponent(() => import("./containers/Auth/Auth"));
+const Orders = React.lazy(() => import("./containers/Orders/Orders"));
+
+const Auth = React.lazy(() => import("./containers/Auth/Auth"));
 
 const App = (props) => {
    useEffect(() => {
@@ -24,7 +23,7 @@ const App = (props) => {
 
    let routes = (
       <Switch>
-         <Route path="/auth" component={asyncAuth} />
+         <Route path="/auth" render={() => <Auth />} />
          <Route exact path="/" component={BurgerBuilder} />
          <Redirect to="/" />
       </Switch>
@@ -32,9 +31,9 @@ const App = (props) => {
    if (props.isAuthenticated) {
       routes = (
          <Switch>
-            <Route path="/auth" component={asyncAuth} />
-            <Route path="/orders" component={asyncOrders} />
-            <Route path="/checkout" component={asyncCheckout} />
+            <Route path="/auth" render={() => <Auth />} />
+            <Route path="/orders" render={() => <Orders />} />
+            <Route path="/checkout" render={() => <Checkout />} />
             <Route path="/logout" component={Logout} />
             <Route exact path="/" component={BurgerBuilder} />
             <Redirect to="/" />
@@ -43,7 +42,9 @@ const App = (props) => {
    }
    return (
       <div>
-         <Layout>{routes}</Layout>
+         <Layout>
+            <Suspense fallback={<Spinner />}>{routes}</Suspense>
+         </Layout>
       </div>
    );
 };
